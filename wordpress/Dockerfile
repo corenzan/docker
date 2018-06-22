@@ -6,6 +6,7 @@ RUN apk add --no-cache \
   php7-apache2 \
   php7-opcache \
   php7-xdebug \
+  php7-ctype \
   php7-phar \
   php7-curl \
   php7-posix \
