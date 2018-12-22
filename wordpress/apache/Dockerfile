@@ -27,7 +27,6 @@ RUN apk add --no-cache \
 
 RUN mkdir /run/apache2 && chown apache:apache /run/apache2
 ADD wordpress.conf /etc/apache2/conf.d/
-ADD php-development.ini /etc/php7/conf.d/
 ADD opcache-recommended.ini /etc/php7/conf.d/
 
 RUN apk add --no-cache curl
