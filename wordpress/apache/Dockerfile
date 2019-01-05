@@ -31,6 +31,7 @@ RUN mkdir /run/apache2 && chown developer:developer /run/apache2
 RUN chown -R developer:developer /var/www/localhost/htdocs
 ADD wordpress.conf /etc/apache2/conf.d/
 ADD opcache-recommended.ini /etc/php7/conf.d/
+ADD php-recommended.ini /etc/php7/conf.d/
 
 RUN apk add --no-cache curl
 
