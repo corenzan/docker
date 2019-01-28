@@ -20,6 +20,7 @@ RUN apk add --no-cache \
   php7-openssl \
   php7-simplexml \
   php7-sockets \
+  php7-session \
   php7-xmlreader \
   php7-xmlwriter \
   php7-tokenizer \
