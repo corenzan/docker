@@ -1,5 +1,4 @@
-FROM alpine:3.8
-MAINTAINER Arthur <arthur@corenzan.com>
+FROM alpine:3.9
 
 RUN apk add --no-cache \
   apache2 \
@@ -24,23 +23,20 @@ RUN apk add --no-cache \
   php7-xmlreader \
   php7-xmlwriter \
   php7-tokenizer \
-  php7-xmlrpc
+  php7-xmlrpc \
+  curl
 
-RUN addgroup developer
-RUN adduser -S -u 1000 -G developer developer
-RUN mkdir /run/apache2 && chown developer:developer /run/apache2
-RUN chown -R developer:developer /var/www/localhost/htdocs
+RUN addgroup -S -g 1000 www \
+  && adduser -S -D -H -u 1000 -s /sbin/nologin -G www www \
+  && chown www:www /run/apache2 /var/www/localhost/htdocs
 ADD wordpress.conf /etc/apache2/conf.d/
-ADD opcache-recommended.ini /etc/php7/conf.d/
 ADD php-recommended.ini /etc/php7/conf.d/
-
-RUN apk add --no-cache curl
 
 ADD composer.sh /tmp/
 ENV COMPOSER_ALLOW_SUPERUSER 1
-RUN /tmp/composer.sh
-RUN mv composer.phar /usr/local/bin/composer
+RUN /tmp/composer.sh \
+  && mv composer.phar /usr/local/bin/composer
 
 EXPOSE 80
-
+WORKDIR /var/www/localhost/htdocs
 CMD ["httpd", "-DFOREGROUND"]
