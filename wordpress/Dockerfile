@@ -1,8 +1,12 @@
-FROM alpine:3.9
+FROM alpine:3.10
 
 RUN apk add --no-cache \
   apache2 \
   php7-apache2 \
+  php7-bcmath \
+  php7-exif \
+  php7-fileinfo \
+  php7-pecl-imagick \
   php7-opcache \
   php7-xdebug \
   php7-ctype \
