@@ -1,4 +1,4 @@
-FROM alpine:3.10
+FROM alpine:3.11
 
 RUN apk add --no-cache \
   apache2 \
@@ -34,14 +34,16 @@ RUN apk add --no-cache \
 RUN addgroup -S -g 1000 www \
   && adduser -S -D -H -u 1000 -s /sbin/nologin -G www www \
   && chown www:www /run/apache2 /var/www/localhost/htdocs
-ADD wordpress.conf /etc/apache2/conf.d/
-ADD php-recommended.ini /etc/php7/conf.d/
+COPY wordpress.conf /etc/apache2/conf.d/
+COPY php-recommended.ini /etc/php7/conf.d/
 
-ADD composer.sh /tmp/
+COPY composer.sh .
 ENV COMPOSER_ALLOW_SUPERUSER 1
-RUN /tmp/composer.sh \
+RUN ./composer.sh \
   && mv composer.phar /usr/local/bin/composer
 
-EXPOSE 80
 WORKDIR /var/www/localhost/htdocs
+
+EXPOSE 80
+
 CMD ["httpd", "-DFOREGROUND"]
