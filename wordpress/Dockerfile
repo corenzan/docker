@@ -1,34 +1,33 @@
-FROM alpine:3.11
+FROM alpine:3.16
 
 RUN apk add --no-cache \
   apache2 \
-  php7-apache2 \
-  php7-bcmath \
-  php7-exif \
-  php7-fileinfo \
-  php7-pecl-imagick \
-  php7-opcache \
-  php7-xdebug \
-  php7-ctype \
-  php7-phar \
-  php7-curl \
-  php7-posix \
-  php7-ftp \
-  php7-dom \
-  php7-pdo \
-  php7-gd \
-  php7-iconv \
-  php7-json \
-  php7-mbstring \
-  php7-mysqli \
-  php7-openssl \
-  php7-simplexml \
-  php7-sockets \
-  php7-session \
-  php7-xmlreader \
-  php7-xmlwriter \
-  php7-tokenizer \
-  php7-xmlrpc \
+  php8-apache2 \
+  php8-bcmath \
+  php8-exif \
+  php8-fileinfo \
+  php8-pecl-imagick \
+  php8-opcache \
+  php8-xdebug \
+  php8-ctype \
+  php8-phar \
+  php8-curl \
+  php8-posix \
+  php8-ftp \
+  php8-dom \
+  php8-pdo \
+  php8-gd \
+  php8-iconv \
+  php8-json \
+  php8-mbstring \
+  php8-mysqli \
+  php8-openssl \
+  php8-simplexml \
+  php8-sockets \
+  php8-session \
+  php8-xmlreader \
+  php8-xmlwriter \
+  php8-tokenizer \
   curl
 
 RUN addgroup -S -g 1000 www \
@@ -37,8 +36,8 @@ RUN addgroup -S -g 1000 www \
 COPY wordpress.conf /etc/apache2/conf.d/
 COPY php-recommended.ini /etc/php7/conf.d/
 
-COPY composer.sh .
 ENV COMPOSER_ALLOW_SUPERUSER 1
+COPY composer.sh .
 RUN ./composer.sh \
   && mv composer.phar /usr/local/bin/composer
 
